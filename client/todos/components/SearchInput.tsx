@@ -1,20 +1,15 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 import ListView from './ListView';
-import {Promise} from 'es6-promise';
 //import {PROMISE}  from 'core-js';
-import data from '../testData'
 import { Todo, IState } from '../model';
-import { changeText,
-         changeDataModel,
-         changeLoading
-       } from '../actions'
+
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 
-interface SearchInputInputProps{
-  functionFind:()=>void;
+export interface SearchInputInputProps{
+  functionFind:(string)=>void;
 
   inputText:string;
   currentItem:number;
@@ -31,19 +26,18 @@ interface  SearchInputInputState {
   showPopup:boolean;
 }
 
-class SearchInput extends React.Component<SearchInputInputProps, SearchInputInputState> {
+class SearchInput extends React.Component<any, any> {
   refs: {
     input:HTMLInputElement;
     listView:ListView;
   };
-  constructor(props, context) {
+  constructor(props:any, context:any) {
     super(props, context);
     let initState:SearchInputInputState = {
       showPopup:false,
       selectedItem:-1
     }
     this.state = initState;
-    console.log(this.props);
 
     this.handleKeyUp = this.handleKeyUp.bind(this);
     this.handleChangeText = this.handleChangeText.bind(this);
@@ -116,64 +110,16 @@ class SearchInput extends React.Component<SearchInputInputProps, SearchInputInpu
                       showPopup:false,
                       selectedItem:-1,
                     });
-    } 
+    }
   }
   updateFind(text=this.refs.input.value){
     let findText = text.trim();
-    this.find(findText);
+    this.props.functionFind(findText);
   }
   handleChangeText(e){
     let text = e.target.value;
     this.props.handleChangeText(text);
     this.updateFind(text);
   }
-  find(text){
-    let that = this;
-    text = text.trim();
-    let result = new Promise(function (resolve,reject) {
-      that.props.handleChangeStateLoadging(true);
-        setTimeout(function () {
-          var arrData = data;
-          var newData = [];
-          for(let i=0;i<arrData.length;i++){
-            if(arrData[i].data.search( new RegExp(text, 'i'))!=-1){
-              newData.push(arrData[i]);
-            }
-          }
-          resolve(newData);
-        }, 100)
-      }
-    ).then(function(value){
-      that.props.handleChangeStateLoadging(false);      
-      that.props.handleChangeDataModel(value);
-      console.log('find ok');
-    },function(value){
-      that.props.handleChangeStateLoadging(false);
-      console.log('find fail');
-    });
-    return result;
-  }
 };
-const mapStateToProps = state => ({
-    inputText:state.todos.inputText,
-    currentItem:state.todos.currentItem,
-    dataModel: state.todos.dataModel,
-    isLoading:state.todos.isLoading,
-    showField:state.todos.showField 
-});
-const mapDispatchToProps = function (dispatch) {
-  return {
-    handleChangeText: (text:string) => {
-      dispatch(changeText(text))
-    },
-    handleChangeDataModel: (newModel:any) => {
-      dispatch(changeDataModel(newModel))
-    },
-    handleChangeStateLoadging: (flag:boolean) => {
-      dispatch(changeLoading(flag))
-    }
-  }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SearchInput);
-//bugs on https://github.com/DefinitelyTyped/DefinitelyTyped/issues/6237
+export default SearchInput;

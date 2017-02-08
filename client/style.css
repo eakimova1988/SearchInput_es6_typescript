@@ -16,6 +16,7 @@ body{
   height: 42px;
   border-radius: 8px;
   position: relative;
+  margin: 10px;
 }
 .searchInput input{
   width: 100%;
@@ -110,10 +111,7 @@ body{
   display: none;
 }
 div.todoapp{
-  border-radius: none;
   background: none;
-  margin: none;
-  position: none;
   box-shadow: none;
 }
 body {
