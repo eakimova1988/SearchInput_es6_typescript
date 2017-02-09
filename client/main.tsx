@@ -8,7 +8,7 @@ import rootReducer from './main/reducer';
 
 const initialState = {};
 
-const store: Store<any> = createStore(rootReducer, initialState);
+export const store: Store<any> = createStore(rootReducer, initialState);
 
 ReactDOM.render(
   <Provider store={store}>

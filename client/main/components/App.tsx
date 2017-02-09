@@ -10,16 +10,16 @@ import { changeText,
        } from '../../todos/actions'
 import {Promise} from 'es6-promise';
 import data from '../../todos/testData'
+import {store} from '../../main'
 
 //call with bind(this)
 function functionFind(text:string){
-  let that = this;
-  text = text.trim();
+  text = text.trim().replace(/\\/g, "\\\\");
   let result = new Promise(function (resolve,reject) {
-    that.handleChangeStateLoadging(true);
+    store.dispatch(changeLoading(true));
       setTimeout(function () {
-        var arrData = data;
-        var newData = [];
+        let arrData = data;
+        let newData = [];
         for(let i=0;i<arrData.length;i++){
           if(arrData[i].data.search( new RegExp(text, 'i'))!=-1){
             newData.push(arrData[i]);
@@ -29,12 +29,10 @@ function functionFind(text:string){
       }, 100)
     }
   ).then(function(value){
-    that.handleChangeStateLoadging(false);
-    that.handleChangeDataModel(value);
-    console.log('find ok');
+    store.dispatch(changeLoading(false));
+    store.dispatch(changeDataModel(value));
   },function(value){
-    that.handleChangeStateLoadging(false);
-    console.log('find fail');
+    store.dispatch(changeLoading(false));
   });
   return result;
 }
@@ -65,13 +63,6 @@ const mapStateToPropsApp = state => ({
   showField:state.todos.showField 
 });
 
-// const mapStateToProps = state => ({
-//     inputText:state.todos.inputText,
-//     currentItem:state.todos.currentItem,
-//     dataModel: state.todos.dataModel,
-//     isLoading:state.todos.isLoading,
-//     showField:state.todos.showField 
-// });
 const mapDispatchToProps = function (dispatch) {
   return {
     handleChangeText: (text:string) => {
