@@ -77,5 +77,6 @@ const mapDispatchToProps = function (dispatch) {
   }
 };
 
-connect(mapStateToPropsApp, mapDispatchToProps)(SearchInput);
+connect(mapStateToPropsApp, mapDispatchToProps)(SearchInput as any);
+//https://github.com/DefinitelyTyped/DefinitelyTyped/issues/6237
 export default connect(mapStateToPropsApp,mapDispatchToProps)(App);

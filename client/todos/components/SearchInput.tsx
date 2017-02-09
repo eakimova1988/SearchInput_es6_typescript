@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 import ListView from './ListView';
-//import {PROMISE}  from 'core-js';
 import { Todo, IState } from '../model';
 
 import { connect } from 'react-redux';
@@ -26,7 +25,7 @@ interface  SearchInputInputState {
   showPopup:boolean;
 }
 
-class SearchInput extends React.Component<any, any> {
+class SearchInput extends React.Component<SearchInputInputProps, SearchInputInputState> {
   refs: {
     input:HTMLInputElement;
     listView:ListView;
