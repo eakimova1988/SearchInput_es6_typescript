@@ -47,7 +47,7 @@ class SearchInput extends React.Component<SearchInputInputProps, SearchInputInpu
   render(){
     return (<div className='searchInput'>
                 <input type='text' ref='input' onChange={this.handleChangeText}
-                placeholder='Search Twitter users...' value={this.props.inputText}
+                placeholder='Search...' value={this.props.inputText}
                 onFocus={this.handleFocusIn} onBlur={this.handleBlur} onKeyUp={this.handleKeyUp}/>
                 <ListView isVisible={(this.state.showPopup==true && this.props.isLoading==false)}
                 data={this.props.dataModel} selectedItem={this.state.selectedItem}

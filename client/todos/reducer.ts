@@ -28,64 +28,22 @@ const initialState: IState = {
   }
  ]};
 
-export default handleActions<IState, Todo>({
-  [CHANGE_INPUT_TEXT]: (state: IState, action: Action<Todo>): IState => {
-    return assign({},state,{
-      inputText: action.payload,
-      currentItem:-1
-    });
-  },
-
-  [CHANGE_DATA_MODEL]:(state: IState, action: Action<Todo>): IState => {
-    return assign({},state,{
-      dataModel: action.payload
-    });
-  },
-
-  [CHANGE_FLAG_LOADING]:(state: IState, action: Action<Todo>): IState => {
-    return assign({},state,{
-      isLoading: action.payload
-    });
+ export default function applicationRedusers(state = initialState,action) {
+  switch(action.type){
+    case CHANGE_INPUT_TEXT:
+      return {...state,
+          inputText:action.payload,
+          currentIndex:-1
+        };
+    case CHANGE_DATA_MODEL:
+      return {...state,
+          dataModel:action.payload
+        };
+    case CHANGE_FLAG_LOADING:
+      return  {...state,
+          isLoading:action.payload
+        };
+    default:
+      return state;
   }
-
-  // [ADD_TODO]: (state: IState, action: Action<Todo>): IState => {
-  //   return {[{
-  //     id: state.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1,
-  //     completed: action.payload.completed,
-  //     text: action.payload.text
-  //   }], ...state};
-  // },
-
-  // [DELETE_TODO]: (state: IState, action: Action<Todo>): IState => {
-  //   return state.filter(todo =>
-  //     todo.id !== action.payload.id
-  //   );
-  // },
-
-  // [EDIT_TODO]: (state: IState, action: Action<Todo>): IState => {
-  //   return <IState>state.map(todo =>
-  //     todo.id === action.payload.id
-  //       ? assign(<Todo>{}, todo, { text: action.payload.text })
-  //       : todo
-  //   );
-  // },
-
-  // [COMPLETE_TODO]: (state: IState, action: Action<Todo>): IState => {
-  //   return <IState>state.map(todo =>
-  //     todo.id === action.payload.id ?
-  //       assign({}, todo, { completed: !todo.completed }) :
-  //       todo
-  //   );
-  // },
-
-  // [COMPLETE_ALL]: (state: IState, action: Action<Todo>): IState => {
-  //   const areAllMarked = state.every(todo => todo.completed);
-  //   return <IState>state.map(todo => assign({}, todo, {
-  //     completed: !areAllMarked
-  //   }));
-  // },
-
-  // [CLEAR_COMPLETED]: (state: IState, action: Action<Todo>): IState => {
-  //   return state.filter(todo => todo.completed === false);
-  // }
-}, initialState);
+}

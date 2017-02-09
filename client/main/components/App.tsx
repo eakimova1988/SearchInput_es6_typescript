@@ -12,7 +12,6 @@ import {Promise} from 'es6-promise';
 import data from '../../todos/testData'
 import {store} from '../../main'
 
-//call with bind(this)
 function functionFind(text:string){
   text = text.trim().replace(/\\/g, "\\\\");
   let result = new Promise(function (resolve,reject) {
@@ -38,13 +37,10 @@ function functionFind(text:string){
 }
 
 interface AppProps extends SearchInputInputProps{
-  todos: model.Todo[];
-  dispatch: Dispatch<{}>;
 }
 
 class App extends React.Component<AppProps, void> {
   render() {
-    const { todos, dispatch } = this.props;
     const showField:string = 'data';
     return (
       <div className="todoapp">
@@ -55,7 +51,6 @@ class App extends React.Component<AppProps, void> {
 }
 
 const mapStateToPropsApp = state => ({
-  todos: state.todos,
   inputText:state.todos.inputText,
   currentItem:state.todos.currentItem,
   dataModel: state.todos.dataModel,
@@ -77,6 +72,4 @@ const mapDispatchToProps = function (dispatch) {
   }
 };
 
-connect(mapStateToPropsApp, mapDispatchToProps)(SearchInput as any);
-//https://github.com/DefinitelyTyped/DefinitelyTyped/issues/6237
 export default connect(mapStateToPropsApp,mapDispatchToProps)(App);
